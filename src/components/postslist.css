@@ -1,0 +1,41 @@
+.post-list {
+  display: flex;
+}
+.post-list ul {
+  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  padding: 30px;
+  max-width: 500px;
+  margin: 10% auto;
+  text-align: center;
+  font-family: arial;
+  list-style-type: none;
+}
+.post-list li {
+  min-width: 400px;
+  padding: 15px;
+}
+.post-list ul .title {
+  font-size: 20px;
+  font-weight: bold;
+}
+.post-list .body {
+  max-height: 2.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.post-list li button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 50%;
+  font-size: 18px;
+}
+
+.post-list li button:hover {
+  opacity: 0.7;
+}
