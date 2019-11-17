@@ -9,7 +9,9 @@ import PostsList from "./components/postsList";
 import NavBar from "./components/NavBar";
 import PostItem from "./components/postItem";
 import CreatePost from "./components/CreatePost";
-import { db } from "./base";
+import SignUp from "./components/auth/SignUp";
+import SignIn from "./components/auth/SignIn";
+import { db, firebase } from "./base";
 
 export default class App extends Component {
   state = {
@@ -21,10 +23,10 @@ export default class App extends Component {
       .get()
       .then(querySnapshot => {
         const posts = querySnapshot.docs.map(doc => doc.data());
-        // doc.data() is never undefined for query doc snapshots
         console.log(posts);
         this.setState({ posts });
       })
+
       .catch(function(error) {
         console.log("Error getting documents: ", error);
       });
@@ -55,6 +57,17 @@ export default class App extends Component {
               render={props => (
                 <CreatePost {...props} createPost={this.createPost} />
               )}
+            />
+
+            <Route
+              exact
+              path="/signup"
+              render={props => <SignUp {...props} />}
+            />
+            <Route
+              exact
+              path="/signin"
+              render={props => <SignIn {...props} />}
             />
             {posts.map(post => (
               <Route

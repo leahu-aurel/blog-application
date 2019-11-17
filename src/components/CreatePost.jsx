@@ -1,11 +1,28 @@
 import React, { Component } from "react";
-import { db } from "../base";
-
+import { db, firebase } from "../base";
+import { Redirect } from "react-router-dom";
 export default class CreatePost extends Component {
   state = {
+    signedIn: true,
     title: "",
     content: ""
   };
+  componentDidMount() {
+    this.fireBaseListener = firebase.auth().onAuthStateChanged(user => {
+      console.log("createPost.jsx");
+      console.log(user);
+      if (user) {
+        console.log("Setting to true");
+        this.setState({ signedIn: true });
+      } else {
+        this.setState({ signedIn: false });
+      }
+    });
+  }
+  componentWillUnmount() {
+    console.log("Unsubscribing listeners");
+    this.fireBaseListener && this.fireBaseListener();
+  }
   handleChange = e => {
     this.setState({
       [e.target.id]: e.target.value
@@ -25,7 +42,9 @@ export default class CreatePost extends Component {
     this.props.history.push("/");
   };
   render() {
-    return (
+    console.log(`this.state.signedIn = ${this.state.signedIn}`);
+
+    return this.state.signedIn ? (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
           <h5 className="grey-text text-darken-3">Create a New Post</h5>
@@ -46,6 +65,8 @@ export default class CreatePost extends Component {
           </div>
         </form>
       </div>
+    ) : (
+      <Redirect to="/signin" />
     );
   }
 }
